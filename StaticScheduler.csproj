@@ -1,0 +1,74 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>library</OutputType>
+        <TargetFrameworks>net10.0;net9.0;net8.0;net7.0;net6.0;netstandard2.1</TargetFrameworks>
+        <LangVersion>latest</LangVersion>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Nullable>disable</Nullable>
+        <RootNamespace>FFS.Libraries.StaticScheduler</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.0.0</Version>
+        <Authors>Felid-Force-Studios</Authors>
+        <Description>C# lock-free work-stealing job scheduler with a dependency graph (JobHandle), mirroring the Unity Job System for pure .NET</Description>
+        <Copyright>Felid-Force-Studios</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageTags>scheduler; jobs; multithreading; work-stealing; parallel; gamedev; unity; staticscheduler</PackageTags>
+        <RepositoryUrl>https://github.com/Felid-Force-Studios/StaticScheduler</RepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <PackageId>FFS.StaticScheduler.Debug</PackageId>
+        <AssemblyName>FFS.StaticScheduler.Debug</AssemblyName>
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>portable</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>FFS_SCHEDULER_ENABLE_DEBUG</DefineConstants>
+        <WarningLevel>4</WarningLevel>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <PackageId>FFS.StaticScheduler</PackageId>
+        <AssemblyName>FFS.StaticScheduler</AssemblyName>
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>portable</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <WarningLevel>4</WarningLevel>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath=""/>
+        <None Include="README_RU.md" Pack="true" PackagePath=""/>
+        <None Include="README_ZH.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="**/*.meta"/>
+        <None Remove="FFS.StaticScheduler.asmdef"/>
+        <None Remove="package.json"/>
+        <None Remove="LICENSE.meta"/>
+        <None Remove="Runtime/**/*"/>
+        <Content Remove="Runtime/**/*"/>
+        <Compile Remove="Runtime/**/*.cs"/>
+    </ItemGroup>
+
+    <!-- Reuses the FFS.StaticPack allocator (PackMemory / PackAllocator). The PackAllocator API is
+         published from StaticPack 2.0.0 onward. -->
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <PackageReference Include="FFS.StaticPack.Debug" Version="2.0.0" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(Configuration)' == 'Release'">
+        <PackageReference Include="FFS.StaticPack" Version="2.0.0" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+    </ItemGroup>
+
+</Project>

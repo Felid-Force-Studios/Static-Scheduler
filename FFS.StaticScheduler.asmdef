@@ -1,0 +1,17 @@
+{
+    "name": "FFS.StaticScheduler",
+    "rootNamespace": "FFS.Libraries.StaticScheduler",
+    "references": [
+        "FFS.StaticPack"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+    ],
+    "noEngineReferences": false
+}
